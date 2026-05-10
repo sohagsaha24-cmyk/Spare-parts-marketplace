@@ -1,0 +1,32 @@
+{% extends 'admin/base.html' %}
+{% block title %}Admin Login{% endblock %}
+{% block login_content %}
+
+<div class="admin-login-wrap">
+    <div class="admin-login-card">
+        <div class="login-logo">⚙</div>
+        <h2>AutoParts BD</h2>
+        <p>Admin Panel Login</p>
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="login-error">{% for msg in messages %}{{ msg }}{% endfor %}</div>
+        {% endif %}
+        {% endwith %}
+
+        <form method="POST" class="login-form">
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" name="username" placeholder="Enter username" required autofocus>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" name="password" placeholder="Enter password" required>
+            </div>
+            <button type="submit" class="btn-submit">Login →</button>
+        </form>
+        <div class="login-hint">Default: admin / admin123</div>
+    </div>
+</div>
+
+{% endblock %}

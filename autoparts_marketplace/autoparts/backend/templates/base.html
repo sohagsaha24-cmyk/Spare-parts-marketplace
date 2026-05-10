@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}AutoParts BD - Quality Spare Parts{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="{{ url_for('main.index') }}" class="nav-brand">
+                <span class="brand-icon">⚙</span>
+                <span class="brand-text">AUTO<strong>PARTS</strong><span class="brand-bd">BD</span></span>
+            </a>
+            <div class="nav-center">
+                <form action="{{ url_for('main.index') }}" method="get" class="search-form">
+                    <input type="text" name="search" placeholder="Search parts, brands, models..." 
+                           value="{{ request.args.get('search', '') }}" class="search-input">
+                    <button type="submit" class="search-btn">🔍</button>
+                </form>
+            </div>
+            <div class="nav-right">
+                <a href="{{ url_for('admin.login') }}" class="admin-link">Admin</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="flash-container">
+        {% for msg in messages %}
+        <div class="flash-msg">{{ msg }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    <!-- Main Content -->
+    <main>{% block content %}{% endblock %}</main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <span class="brand-icon">⚙</span>
+                <span>AutoParts BD</span>
+            </div>
+            <p class="footer-copy">© 2025 AutoParts BD. All genuine spare parts. Quality guaranteed.</p>
+            <div class="footer-cats">
+                <a href="/?category=Engine">Engine</a>
+                <a href="/?category=Brake">Brake</a>
+                <a href="/?category=Suspension">Suspension</a>
+                <a href="/?category=Electrical">Electrical</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

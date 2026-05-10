@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block title %}{{ product.name }} - AutoParts BD{% endblock %}
+{% block content %}
+
+<div class="container">
+    <div class="breadcrumb">
+        <a href="{{ url_for('main.index') }}">Home</a> / 
+        <a href="/?category={{ product.category }}">{{ product.category }}</a> / 
+        <span>{{ product.name }}</span>
+    </div>
+
+    <div class="product-detail">
+        <div class="detail-image-col">
+            <div class="detail-image-wrap">
+                <img src="{{ product.image_url or 'https://via.placeholder.com/600x450?text=No+Image' }}" 
+                     alt="{{ product.name }}" 
+                     onerror="this.src='https://via.placeholder.com/600x450?text=No+Image'">
+            </div>
+            <div class="detail-badges">
+                <span class="badge-category">{{ product.category }}</span>
+                <span class="badge-brand">{{ product.brand }}</span>
+            </div>
+        </div>
+
+        <div class="detail-info-col">
+            <div class="detail-brand-tag">{{ product.brand }}</div>
+            <h1 class="detail-title">{{ product.name }}</h1>
+            
+            <div class="detail-price-row">
+                <span class="detail-price">৳{{ "{:,.0f}".format(product.price) }}</span>
+                <span class="detail-stock-tag {% if product.stock == 0 %}tag-out{% elif product.stock <= 5 %}tag-low{% else %}tag-in{% endif %}">
+                    {% if product.stock == 0 %}❌ Out of Stock{% elif product.stock <= 5 %}⚠ Only {{ product.stock }} left{% else %}✅ In Stock ({{ product.stock }} available){% endif %}
+                </span>
+            </div>
+
+            {% if product.description %}
+            <div class="detail-section">
+                <h3>Description</h3>
+                <p>{{ product.description }}</p>
+            </div>
+            {% endif %}
+
+            {% if product.compatibility %}
+            <div class="detail-section compatibility-box">
+                <h3>🚗 Vehicle Compatibility</h3>
+                <p>{{ product.compatibility }}</p>
+            </div>
+            {% endif %}
+
+            <div class="detail-meta">
+                <div class="meta-item"><span>Category</span><strong>{{ product.category }}</strong></div>
+                <div class="meta-item"><span>Brand</span><strong>{{ product.brand }}</strong></div>
+                <div class="meta-item"><span>Price</span><strong>৳{{ "{:,.0f}".format(product.price) }}</strong></div>
+            </div>
+
+            {% if product.stock > 0 %}
+            <a href="{{ url_for('orders.checkout', product_id=product.id) }}" class="btn-buy-large">
+                🛒 Buy Now – Place Order
+            </a>
+            {% else %}
+            <button class="btn-buy-large disabled" disabled>❌ Currently Out of Stock</button>
+            {% endif %}
+
+            <a href="{{ url_for('main.index') }}" class="btn-back">← Back to All Parts</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

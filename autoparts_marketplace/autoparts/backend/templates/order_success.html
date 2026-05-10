@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}Order Placed Successfully!{% endblock %}
+{% block content %}
+
+<div class="container">
+    <div class="success-page">
+        <div class="success-icon-wrap">
+            <div class="success-icon">✓</div>
+        </div>
+        <h1 class="success-title">Order Placed!</h1>
+        <p class="success-sub">Thank you, <strong>{{ order.customer_name }}</strong>! Your order has been received.</p>
+
+        <div class="success-card">
+            <div class="success-order-id">Order #{{ order.id }}</div>
+            
+            <div class="success-details">
+                <div class="success-row">
+                    <span>Product</span>
+                    <strong>{{ order.product_name }}</strong>
+                </div>
+                <div class="success-row">
+                    <span>Brand</span>
+                    <strong>{{ order.brand }}</strong>
+                </div>
+                <div class="success-row">
+                    <span>Quantity</span>
+                    <strong>{{ order.quantity }} unit(s)</strong>
+                </div>
+                <div class="success-row">
+                    <span>Total Amount</span>
+                    <strong class="success-total">৳{{ "{:,.0f}".format(order.product_price * order.quantity) }}</strong>
+                </div>
+                <div class="success-row">
+                    <span>Mobile</span>
+                    <strong>{{ order.mobile }}</strong>
+                </div>
+                <div class="success-row">
+                    <span>Delivery Address</span>
+                    <strong>{{ order.address }}</strong>
+                </div>
+                <div class="success-row">
+                    <span>Status</span>
+                    <span class="status-badge status-pending">{{ order.status|capitalize }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="success-note">
+            📞 Our team will call you on <strong>{{ order.mobile }}</strong> within 24 hours to confirm your order and arrange delivery.
+        </div>
+
+        <a href="{{ url_for('main.index') }}" class="btn-primary">← Continue Shopping</a>
+    </div>
+</div>
+
+{% endblock %}

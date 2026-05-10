@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}AutoParts BD - Browse Spare Parts{% endblock %}
+{% block content %}
+
+<div id="spa-root">
+    <!-- Hero Banner -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-tag">Auto Parts Marketplace</div>
+            <h1 class="hero-title">Find the <em>Right Part</em><br>for Your Vehicle</h1>
+            <p class="hero-sub">Search, filter by category, and add parts—all on one page.</p>
+        </div>
+        <div class="hero-visual">
+            <div class="gear-ring">⚙</div>
+        </div>
+    </section>
+
+    <!-- Category Filter Bar -->
+    <section class="filter-section">
+        <div class="container">
+            <div class="category-bar" id="spa-categories">
+                <button class="cat-btn active" data-category="">All Parts</button>
+            </div>
+            <div class="search-result-info" id="spa-search-info" style="display:none;"></div>
+        </div>
+    </section>
+
+    <!-- Add product -->
+    <section class="products-section">
+        <div class="container">
+            <div class="products-header">
+                <h2 class="section-title" id="spa-title">All Spare Parts</h2>
+                <div style="display:flex; gap:10px; align-items:center;">
+                    <span class="product-count" id="spa-count">0 items</span>
+                </div>
+            </div>
+
+            <div class="products-grid" id="spa-products"></div>
+
+            <div class="empty-state" id="spa-empty" style="display:none;">
+                <div class="empty-icon">🔍</div>
+                <h3>No parts found</h3>
+                <p>Try a different search term or category</p>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  // Mark this template as SPA-enabled (main.js will pick it up).
+  window.__AUTOPARTS_SPA__ = true;
+</script>
+{% endblock %}

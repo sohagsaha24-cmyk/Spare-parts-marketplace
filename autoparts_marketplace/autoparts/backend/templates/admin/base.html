@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Admin - AutoParts BD{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+<body class="admin-body">
+
+{% if session.get('admin_logged_in') %}
+<div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+        <div class="sidebar-brand">
+            <span>⚙</span>
+            <span>Admin Panel</span>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="{{ url_for('admin.dashboard') }}" class="sidebar-link {% if request.endpoint == 'admin.dashboard' %}active{% endif %}">
+                📊 Dashboard
+            </a>
+            <a href="{{ url_for('admin.products') }}" class="sidebar-link {% if 'product' in request.endpoint %}active{% endif %}">
+                📦 Products
+            </a>
+            <a href="{{ url_for('admin.orders') }}" class="sidebar-link {% if 'order' in request.endpoint %}active{% endif %}">
+                🛒 Orders
+            </a>
+            <a href="{{ url_for('main.index') }}" class="sidebar-link" target="_blank">
+                🌐 View Store
+            </a>
+            <a href="{{ url_for('admin.logout') }}" class="sidebar-link sidebar-logout">
+                🚪 Logout
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="admin-main">
+        <div class="admin-topbar">
+            <h1 class="admin-page-title">{% block page_title %}Dashboard{% endblock %}</h1>
+        </div>
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="admin-flash-container">
+            {% for msg in messages %}
+            <div class="admin-flash">{{ msg }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        <div class="admin-content">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+</div>
+{% else %}
+{% block login_content %}{% endblock %}
+{% endif %}
+
+</body>
+</html>
